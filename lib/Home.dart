@@ -62,7 +62,7 @@ class _profileState extends State<profile> {
         ),
       ),
       backgroundColor: Colors.grey.shade300,
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 20,
@@ -72,7 +72,28 @@ class _profileState extends State<profile> {
               SizedBox(
                 height: 20,
               ),
-              cardwidget()
+              cardwidget(),
+              Gap(10),
+              Container(
+                height: 150,
+                decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(10)),
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 148,
+                      width: 30,
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              topLeft: Radius.circular(10))),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
