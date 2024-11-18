@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:gap/gap.dart';
-import 'package:login/widget/RdioList.dart';
+import 'package:login/widget/RadioList.dart';
 import 'package:login/widget/datawidget.dart';
 
 import 'elevation.dart';

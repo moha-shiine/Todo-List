@@ -16,6 +16,7 @@ class _RadioBotomListState extends State<RadioBotomList> {
   Widget build(BuildContext context) {
     return Material(
       child: RadioListTile(
+        contentPadding: EdgeInsetsDirectional.zero,
         enableFeedback: true,
         title: Transform.translate(
           offset: Offset(-22, 0),
@@ -25,7 +26,7 @@ class _RadioBotomListState extends State<RadioBotomList> {
           ),
         ),
         selected: true,
-        value: "0",
+        value: "1",
         activeColor: widget.colorCategory,
         onChanged: (String? value) {
           setState(() {
