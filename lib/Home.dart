@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:gap/gap.dart';
 import 'package:login/widget/Bottomesheet.dart';
-import 'package:login/widget/datacard.dart';
+import 'package:login/widget/RdioList.dart';
 import 'package:login/widget/datawidget.dart';
 import 'package:login/widget/elevation.dart';
 import 'package:login/widget/headerWidget.dart';
@@ -15,6 +15,7 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +74,7 @@ class _profileState extends State<profile> {
                 height: 20,
               ),
               cardwidget(),
-              Gap(10),
+              Gap(20),
               Container(
                 height: 130,
                 decoration: BoxDecoration(
@@ -84,28 +85,62 @@ class _profileState extends State<profile> {
                   children: [
                     Container(
                       height: 128,
-                      width: 30,
+                      width: 20,
                       decoration: const BoxDecoration(
-                          color: Colors.red,
+                          color: Colors.green,
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10),
                               topLeft: Radius.circular(10))),
                     ),
                     Expanded(
                         child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListTile(
-                            title: Text(
-                              "Learn Flutter State Managment",
+                              title: Text(
+                                "Learn Flutter State Managment",
+                                style: TextStyle(
+                                    decoration: isChecked
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              subtitle: Text(
+                                "learning widget  tree flutter",
+                                style: TextStyle(
+                                  decoration: isChecked
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                ),
+                              ),
+                              trailing: Transform.scale(
+                                scale: 1.9,
+                                child: Checkbox(
+                                  checkColor: Colors.white,
+                                  activeColor: Colors.green,
+                                  shape: CircleBorder(),
+                                  value: isChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      isChecked = value ?? false;
+                                    });
+                                  },
+                                ),
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Divider(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              "Today  18/11/2024  12:30 PM",
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w500, fontSize: 15),
                             ),
-                            subtitle: Text("learning widget  tree flutter"),
-                            trailing: Checkbox(
-                                value: true,
-                                onChanged: (value) => print(value)),
                           )
                         ],
                       ),

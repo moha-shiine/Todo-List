@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:gap/gap.dart';
-import 'package:login/widget/datacard.dart';
+import 'package:login/widget/RdioList.dart';
 import 'package:login/widget/datawidget.dart';
 
 import 'elevation.dart';
@@ -105,15 +105,17 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
             const Gap(
               10,
             ),
-            Row(
+            const Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Expanded(
+                Expanded(
                   child: RadioBotomList(
                     TitelCategory: 'LRN',
                     colorCategory: Colors.green,
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   child: RadioBotomList(
                     TitelCategory: 'GEN',
                     colorCategory: Colors.blue,

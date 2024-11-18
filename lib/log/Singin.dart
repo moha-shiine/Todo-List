@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:login/main.dart';
 
-import 'Home.dart';
+import '../Home.dart';
 
 class Singin extends StatefulWidget {
   const Singin({super.key});

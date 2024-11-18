@@ -17,9 +17,12 @@ class _RadioBotomListState extends State<RadioBotomList> {
     return Material(
       child: RadioListTile(
         enableFeedback: true,
-        title: Text(
-          widget.TitelCategory,
-          style: TextStyle(color: widget.colorCategory),
+        title: Transform.translate(
+          offset: Offset(-22, 0),
+          child: Text(
+            widget.TitelCategory,
+            style: TextStyle(color: widget.colorCategory),
+          ),
         ),
         selected: true,
         value: "0",

@@ -18,9 +18,12 @@ class datawidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title!,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3),
+            child: Text(
+              title!,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
           ),
           Gap(5),
           Container(
