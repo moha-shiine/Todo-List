@@ -131,13 +131,19 @@ class cardwidget extends StatelessWidget {
   }
 }
 
-class CardBottomsheet extends StatelessWidget {
+class CardBottomsheet extends StatefulWidget {
   const CardBottomsheet({
     super.key,
   });
 
   @override
+  State<CardBottomsheet> createState() => _CardBottomsheetState();
+}
+
+class _CardBottomsheetState extends State<CardBottomsheet> {
+  @override
   Widget build(BuildContext context) {
+    String? selectedValue;
     return Container(
       height: MediaQuery.of(context).size.height * 0.70,
       decoration: const BoxDecoration(
@@ -216,6 +222,26 @@ class CardBottomsheet extends StatelessWidget {
                   filled: true,
                   hintText: "Add Description"),
             ),
+            Gap(10),
+            const Text(
+              "Category",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            const Gap(
+              10,
+            ),
+            Material(
+              child: RadioListTile(
+                title: Text("LRN"),
+                value: "LRN",
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedValue = value;
+                  });
+                },
+                groupValue: selectedValue,
+              ),
+            )
           ],
         ),
       ),
