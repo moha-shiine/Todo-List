@@ -30,7 +30,7 @@ class _profileState extends State<profile> {
                     height: 40,
                     width: 40,
                   )),
-              Gap(10),
+              const Gap(10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -42,16 +42,16 @@ class _profileState extends State<profile> {
                         fontWeight: FontWeight.normal,
                         color: Colors.grey.shade400),
                   ),
-                  Text(
+                  const Text(
                     "Shiine",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
-              Spacer(),
-              Icon(IconlyLight.calendar),
-              Gap(10),
-              Icon(IconlyLight.notification),
+              const Spacer(),
+              const Icon(IconlyLight.calendar),
+              const Gap(10),
+              const Icon(IconlyLight.notification),
             ],
           ),
         ),
@@ -95,7 +95,7 @@ class cardwidget extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.w900),
             ),
-            Gap(2),
+            const Gap(2),
             Text(
               "Monday 18 Nov",
               style: TextStyle(
@@ -110,27 +110,7 @@ class cardwidget extends StatelessWidget {
               showModalBottomSheet(
                   isScrollControlled: true,
                   builder: (context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.70,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: Column(
-                        children: [
-                          Gap(10),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 150),
-                            child: Divider(
-                              thickness: 3,
-                              height: 2,
-                              color: Colors.grey,
-                            ),
-                          )
-                        ],
-                      ),
-                    );
+                    return const CardBottomsheet();
                   },
                   context: context);
             },
@@ -150,6 +130,234 @@ class cardwidget extends StatelessWidget {
     );
   }
 }
+
+class CardBottomsheet extends StatefulWidget {
+  const CardBottomsheet({
+    super.key,
+  });
+
+  @override
+  State<CardBottomsheet> createState() => _CardBottomsheetState();
+}
+
+class _CardBottomsheetState extends State<CardBottomsheet> {
+  @override
+  Widget build(BuildContext context) {
+    String? selectedValue;
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.70,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Gap(10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 150),
+              child: Divider(
+                thickness: 3,
+                height: 2,
+                color: Colors.grey.withOpacity(0.3),
+              ),
+            ),
+            const Gap(
+              10,
+            ),
+            const Center(
+              child: Text(
+                "Add New Todo Task",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Divider(thickness: 1, color: Colors.grey.withOpacity(0.5)),
+            const Gap(10),
+            const Text(
+              "Title Task",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            const Gap(
+              10,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  enabled: true,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  fillColor: Colors.grey.shade300,
+                  filled: true,
+                  hintText: "Add Task Name"),
+            ),
+            const Gap(10),
+            const Text(
+              "Discription",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            const Gap(
+              10,
+            ),
+            TextField(
+              maxLines: 4,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  enabled: true,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  fillColor: Colors.grey.shade300,
+                  filled: true,
+                  hintText: "Add Description"),
+            ),
+            const Gap(10),
+            const Text(
+              "Category",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            const Gap(
+              10,
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: RadioBotomList(
+                    TitelCategory: 'LRN',
+                    colorCategory: Colors.green,
+                  ),
+                ),
+                Expanded(
+                  child: RadioBotomList(
+                    TitelCategory: 'GEN',
+                    colorCategory: Colors.blue,
+                  ),
+                ),
+                Expanded(
+                  child: RadioBotomList(
+                    TitelCategory: 'WRK',
+                    colorCategory: Colors.amber,
+                  ),
+                ),
+              ],
+            ),
+            Gap(10),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                datawidget(
+                  title: 'Data',
+                  datevalue: 'dd/mm/yy',
+                  Icons: IconlyLight.calendar,
+                ),
+                Gap(23),
+                datawidget(
+                  title: 'Time',
+                  datevalue: 'hh/mm/ss',
+                  Icons: Icons.lock_clock,
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class datawidget extends StatelessWidget {
+  final String? title;
+  final String? datevalue;
+  final IconData? Icons;
+  const datawidget({
+    super.key,
+    required this.title,
+    required this.datevalue,
+    required this.Icons,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title!,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+          Gap(5),
+          Container(
+            // width: 130,
+            // height: 50,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(8)),
+
+            // ignore: sort_child_properties_last
+            child: Row(
+              children: [
+                Icon(Icons),
+                Gap(10),
+                Text(
+                  datevalue!,
+                  style: TextStyle(fontSize: 15),
+                )
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class RadioBotomList extends StatefulWidget {
+  const RadioBotomList(
+      {super.key, required this.TitelCategory, required this.colorCategory});
+  final String TitelCategory;
+  final Color colorCategory;
+  @override
+  State<RadioBotomList> createState() => _RadioBotomListState();
+}
+
+class _RadioBotomListState extends State<RadioBotomList> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: RadioListTile(
+        enableFeedback: true,
+        title: Text(
+          widget.TitelCategory,
+          style: TextStyle(color: widget.colorCategory),
+        ),
+        selected: true,
+        value: "0",
+        activeColor: widget.colorCategory,
+        onChanged: (String? value) {
+          setState(() {
+            // value = 0
+          });
+        },
+        groupValue: '0',
+      ),
+    );
+  }
+}
+
+
 // Center(
 //         child: Text(
 //           "Welcome TO ",
