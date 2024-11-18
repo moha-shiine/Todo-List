@@ -110,27 +110,7 @@ class cardwidget extends StatelessWidget {
               showModalBottomSheet(
                   isScrollControlled: true,
                   builder: (context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.70,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: Column(
-                        children: [
-                          Gap(10),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 150),
-                            child: Divider(
-                              thickness: 3,
-                              height: 2,
-                              color: Colors.grey,
-                            ),
-                          )
-                        ],
-                      ),
-                    );
+                    return CardBottomsheet();
                   },
                   context: context);
             },
@@ -147,6 +127,98 @@ class cardwidget extends StatelessWidget {
                   fontStyle: FontStyle.normal),
             ))
       ],
+    );
+  }
+}
+
+class CardBottomsheet extends StatelessWidget {
+  const CardBottomsheet({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.70,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Gap(10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 150),
+              child: Divider(
+                thickness: 3,
+                height: 2,
+                color: Colors.grey.withOpacity(0.3),
+              ),
+            ),
+            const Gap(
+              10,
+            ),
+            Center(
+              child: const Text(
+                "Add New Todo Task",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Divider(thickness: 1, color: Colors.grey.withOpacity(0.5)),
+            const Gap(10),
+            const Text(
+              "Title Task",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            const Gap(
+              10,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  enabled: true,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  fillColor: Colors.grey.shade300,
+                  filled: true,
+                  hintText: "Add Task Name"),
+            ),
+            Gap(10),
+            const Text(
+              "Discription",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            const Gap(
+              10,
+            ),
+            TextField(
+              maxLines: 4,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  enabled: true,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  fillColor: Colors.grey.shade300,
+                  filled: true,
+                  hintText: "Add Description"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
