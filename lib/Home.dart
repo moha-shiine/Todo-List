@@ -30,7 +30,7 @@ class _profileState extends State<profile> {
                     height: 40,
                     width: 40,
                   )),
-              Gap(10),
+              const Gap(10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -42,16 +42,16 @@ class _profileState extends State<profile> {
                         fontWeight: FontWeight.normal,
                         color: Colors.grey.shade400),
                   ),
-                  Text(
+                  const Text(
                     "Shiine",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
-              Spacer(),
-              Icon(IconlyLight.calendar),
-              Gap(10),
-              Icon(IconlyLight.notification),
+              const Spacer(),
+              const Icon(IconlyLight.calendar),
+              const Gap(10),
+              const Icon(IconlyLight.notification),
             ],
           ),
         ),
@@ -95,7 +95,7 @@ class cardwidget extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.w900),
             ),
-            Gap(2),
+            const Gap(2),
             Text(
               "Monday 18 Nov",
               style: TextStyle(
@@ -110,7 +110,7 @@ class cardwidget extends StatelessWidget {
               showModalBottomSheet(
                   isScrollControlled: true,
                   builder: (context) {
-                    return CardBottomsheet();
+                    return const CardBottomsheet();
                   },
                   context: context);
             },
@@ -156,7 +156,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
           children: [
             const Gap(10),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 150),
+              padding: const EdgeInsets.symmetric(horizontal: 150),
               child: Divider(
                 thickness: 3,
                 height: 2,
@@ -166,8 +166,8 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
             const Gap(
               10,
             ),
-            Center(
-              child: const Text(
+            const Center(
+              child: Text(
                 "Add New Todo Task",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
@@ -197,7 +197,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
                   filled: true,
                   hintText: "Add Task Name"),
             ),
-            Gap(10),
+            const Gap(10),
             const Text(
               "Discription",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -222,7 +222,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
                   filled: true,
                   hintText: "Add Description"),
             ),
-            Gap(10),
+            const Gap(10),
             const Text(
               "Category",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -230,17 +230,44 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
             const Gap(
               10,
             ),
-            Material(
-              child: RadioListTile(
-                title: Text("LRN"),
-                value: "LRN",
-                onChanged: (String? value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
-                },
-                groupValue: selectedValue,
-              ),
+            const Row(
+              children: [
+                Expanded(
+                  child: RadioBotomList(
+                    TitelCategory: 'LRN',
+                    colorCategory: Colors.green,
+                  ),
+                ),
+                Expanded(
+                  child: RadioBotomList(
+                    TitelCategory: 'GEN',
+                    colorCategory: Colors.blue,
+                  ),
+                ),
+                Expanded(
+                  child: RadioBotomList(
+                    TitelCategory: 'WRK',
+                    colorCategory: Colors.amber,
+                  ),
+                ),
+              ],
+            ),
+            Gap(10),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                datawidget(
+                  title: 'Data',
+                  datevalue: 'dd/mm/yy',
+                  Icons: IconlyLight.calendar,
+                ),
+                Gap(23),
+                datawidget(
+                  title: 'Time',
+                  datevalue: 'hh/mm/ss',
+                  Icons: Icons.lock_clock,
+                ),
+              ],
             )
           ],
         ),
@@ -248,6 +275,89 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
     );
   }
 }
+
+class datawidget extends StatelessWidget {
+  final String? title;
+  final String? datevalue;
+  final IconData? Icons;
+  const datawidget({
+    super.key,
+    required this.title,
+    required this.datevalue,
+    required this.Icons,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title!,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+          Gap(5),
+          Container(
+            // width: 130,
+            // height: 50,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(8)),
+
+            // ignore: sort_child_properties_last
+            child: Row(
+              children: [
+                Icon(Icons),
+                Gap(10),
+                Text(
+                  datevalue!,
+                  style: TextStyle(fontSize: 15),
+                )
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class RadioBotomList extends StatefulWidget {
+  const RadioBotomList(
+      {super.key, required this.TitelCategory, required this.colorCategory});
+  final String TitelCategory;
+  final Color colorCategory;
+  @override
+  State<RadioBotomList> createState() => _RadioBotomListState();
+}
+
+class _RadioBotomListState extends State<RadioBotomList> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: RadioListTile(
+        enableFeedback: true,
+        title: Text(
+          widget.TitelCategory,
+          style: TextStyle(color: widget.colorCategory),
+        ),
+        selected: true,
+        value: "0",
+        activeColor: widget.colorCategory,
+        onChanged: (String? value) {
+          setState(() {
+            // value = 0
+          });
+        },
+        groupValue: '0',
+      ),
+    );
+  }
+}
+
+
 // Center(
 //         child: Text(
 //           "Welcome TO ",
