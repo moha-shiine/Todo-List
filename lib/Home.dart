@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:gap/gap.dart';
+import 'package:login/widget/Bottomesheet.dart';
+import 'package:login/widget/RadioList.dart';
+import 'package:login/widget/datawidget.dart';
+import 'package:login/widget/elevation.dart';
+import 'package:login/widget/headerWidget.dart';
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -10,6 +15,7 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +23,7 @@ class _profileState extends State<profile> {
         toolbarHeight: 90,
         //  foregroundColor: Colors.red,
         backgroundColor: Colors.white,
-        elevation: 4,
+        elevation: 0,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
@@ -57,7 +63,7 @@ class _profileState extends State<profile> {
         ),
       ),
       backgroundColor: Colors.grey.shade300,
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 20,
@@ -67,7 +73,81 @@ class _profileState extends State<profile> {
               SizedBox(
                 height: 20,
               ),
-              cardwidget()
+              cardwidget(),
+              Gap(20),
+              Container(
+                height: 130,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 128,
+                      width: 20,
+                      decoration: const BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              topLeft: Radius.circular(10))),
+                    ),
+                    Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                              title: Text(
+                                "Learn Flutter State Managment",
+                                style: TextStyle(
+                                    decoration: isChecked
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              subtitle: Text(
+                                "learning widget  tree flutter",
+                                style: TextStyle(
+                                  decoration: isChecked
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                ),
+                              ),
+                              trailing: Transform.scale(
+                                scale: 1.9,
+                                child: Checkbox(
+                                  checkColor: Colors.white,
+                                  activeColor: Colors.green,
+                                  shape: CircleBorder(),
+                                  value: isChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      isChecked = value ?? false;
+                                    });
+                                  },
+                                ),
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Divider(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              "Today  18/11/2024  12:30 PM",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 15),
+                            ),
+                          )
+                        ],
+                      ),
+                    ))
+                  ],
+                ),
+              )
             ],
           ),
         ),
@@ -75,288 +155,6 @@ class _profileState extends State<profile> {
     );
   }
 }
-
-class cardwidget extends StatelessWidget {
-  const cardwidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          children: [
-            const Text(
-              "Tody's Task",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900),
-            ),
-            const Gap(2),
-            Text(
-              "Monday 18 Nov",
-              style: TextStyle(
-                  color: Colors.grey.shade500,
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal),
-            ),
-          ],
-        ),
-        ElevatedButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  builder: (context) {
-                    return const CardBottomsheet();
-                  },
-                  context: context);
-            },
-            style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                backgroundColor: const Color.fromARGB(255, 249, 217, 221)),
-            child: const Text(
-              "+ Add New",
-              style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                  fontStyle: FontStyle.normal),
-            ))
-      ],
-    );
-  }
-}
-
-class CardBottomsheet extends StatefulWidget {
-  const CardBottomsheet({
-    super.key,
-  });
-
-  @override
-  State<CardBottomsheet> createState() => _CardBottomsheetState();
-}
-
-class _CardBottomsheetState extends State<CardBottomsheet> {
-  @override
-  Widget build(BuildContext context) {
-    String? selectedValue;
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.70,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Gap(10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 150),
-              child: Divider(
-                thickness: 3,
-                height: 2,
-                color: Colors.grey.withOpacity(0.3),
-              ),
-            ),
-            const Gap(
-              10,
-            ),
-            const Center(
-              child: Text(
-                "Add New Todo Task",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Divider(thickness: 1, color: Colors.grey.withOpacity(0.5)),
-            const Gap(10),
-            const Text(
-              "Title Task",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            const Gap(
-              10,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  enabled: true,
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  fillColor: Colors.grey.shade300,
-                  filled: true,
-                  hintText: "Add Task Name"),
-            ),
-            const Gap(10),
-            const Text(
-              "Discription",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            const Gap(
-              10,
-            ),
-            TextField(
-              maxLines: 4,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  enabled: true,
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  fillColor: Colors.grey.shade300,
-                  filled: true,
-                  hintText: "Add Description"),
-            ),
-            const Gap(10),
-            const Text(
-              "Category",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            const Gap(
-              10,
-            ),
-            const Row(
-              children: [
-                Expanded(
-                  child: RadioBotomList(
-                    TitelCategory: 'LRN',
-                    colorCategory: Colors.green,
-                  ),
-                ),
-                Expanded(
-                  child: RadioBotomList(
-                    TitelCategory: 'GEN',
-                    colorCategory: Colors.blue,
-                  ),
-                ),
-                Expanded(
-                  child: RadioBotomList(
-                    TitelCategory: 'WRK',
-                    colorCategory: Colors.amber,
-                  ),
-                ),
-              ],
-            ),
-            Gap(10),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                datawidget(
-                  title: 'Data',
-                  datevalue: 'dd/mm/yy',
-                  Icons: IconlyLight.calendar,
-                ),
-                Gap(23),
-                datawidget(
-                  title: 'Time',
-                  datevalue: 'hh/mm/ss',
-                  Icons: Icons.lock_clock,
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class datawidget extends StatelessWidget {
-  final String? title;
-  final String? datevalue;
-  final IconData? Icons;
-  const datawidget({
-    super.key,
-    required this.title,
-    required this.datevalue,
-    required this.Icons,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title!,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          ),
-          Gap(5),
-          Container(
-            // width: 130,
-            // height: 50,
-            decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(8)),
-
-            // ignore: sort_child_properties_last
-            child: Row(
-              children: [
-                Icon(Icons),
-                Gap(10),
-                Text(
-                  datevalue!,
-                  style: TextStyle(fontSize: 15),
-                )
-              ],
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class RadioBotomList extends StatefulWidget {
-  const RadioBotomList(
-      {super.key, required this.TitelCategory, required this.colorCategory});
-  final String TitelCategory;
-  final Color colorCategory;
-  @override
-  State<RadioBotomList> createState() => _RadioBotomListState();
-}
-
-class _RadioBotomListState extends State<RadioBotomList> {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: RadioListTile(
-        enableFeedback: true,
-        title: Text(
-          widget.TitelCategory,
-          style: TextStyle(color: widget.colorCategory),
-        ),
-        selected: true,
-        value: "0",
-        activeColor: widget.colorCategory,
-        onChanged: (String? value) {
-          setState(() {
-            // value = 0
-          });
-        },
-        groupValue: '0',
-      ),
-    );
-  }
-}
-
 
 // Center(
 //         child: Text(
