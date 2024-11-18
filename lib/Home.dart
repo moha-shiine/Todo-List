@@ -75,22 +75,41 @@ class _profileState extends State<profile> {
               cardwidget(),
               Gap(10),
               Container(
-                height: 150,
+                height: 130,
                 decoration: BoxDecoration(
-                    color: Colors.amber,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [
                     Container(
-                      height: 148,
+                      height: 128,
                       width: 30,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10),
                               topLeft: Radius.circular(10))),
-                    )
+                    ),
+                    Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              "Learn Flutter State Managment",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w600),
+                            ),
+                            subtitle: Text("learning widget  tree flutter"),
+                            trailing: Checkbox(
+                                value: true,
+                                onChanged: (value) => print(value)),
+                          )
+                        ],
+                      ),
+                    ))
                   ],
                 ),
               )
@@ -101,7 +120,6 @@ class _profileState extends State<profile> {
     );
   }
 }
-
 
 // Center(
 //         child: Text(
