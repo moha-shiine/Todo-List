@@ -144,16 +144,24 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
               ],
             ),
             const Gap(10),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 datawidget(
-                  title: 'Data',
-                  datevalue: 'dd/mm/yy',
-                  Icons: IconlyLight.calendar,
-                ),
+                    title: 'Data',
+                    datevalue: 'dd/mm/yy',
+                    Icons: IconlyLight.calendar,
+                    onTap: () async {
+                      final TimeValue = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2024),
+                        lastDate: DateTime(2030),
+                      );
+                    }),
                 Gap(23),
                 datawidget(
+                  onTap: () async {},
                   title: 'Time',
                   datevalue: 'hh/mm/ss',
                   Icons: Icons.lock_clock,
@@ -165,7 +173,9 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedBotom(
-                  OnTap: () {},
+                  OnTap: () {
+                    Navigator.pop(context);
+                  },
                   title: "Cancel",
                   color: Colors.red,
                 ),
