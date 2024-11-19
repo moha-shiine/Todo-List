@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:login/service/taskcoloection.dart';
 import 'package:login/widget/RadioList.dart';
 import 'package:login/widget/datawidget.dart';
 
-import 'elevation.dart';
+import '../widget/elevation.dart';
 
 class CardBottomsheet extends StatefulWidget {
   const CardBottomsheet({
@@ -16,6 +19,14 @@ class CardBottomsheet extends StatefulWidget {
 }
 
 class _CardBottomsheetState extends State<CardBottomsheet> {
+  final TodoTaskController taskController = Get.put(TodoTaskController());
+
+  @override
+  void initState() {
+    super.initState();
+    taskController.fetchTasks();
+  }
+
   @override
   Widget build(BuildContext context) {
     String? selectedValue;
