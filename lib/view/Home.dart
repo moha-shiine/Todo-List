@@ -7,14 +7,14 @@ import 'package:login/widget/datawidget.dart';
 import 'package:login/widget/elevation.dart';
 import 'package:login/widget/headerWidget.dart';
 
-class profile extends StatefulWidget {
-  const profile({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<profile> createState() => _profileState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _profileState extends State<profile> {
+class _HomeScreenState extends State<HomeScreen> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {

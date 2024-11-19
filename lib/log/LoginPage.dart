@@ -1,44 +1,44 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:login/log/LoginPage.dart';
+import 'package:login/view/Home.dart';
 
-import '../view/Home.dart';
+import '../service/LoginController.dart';
+import 'Singin.dart';
 
-class Singin extends StatefulWidget {
-  const Singin({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<Singin> createState() => _SinginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SinginState extends State<Singin> {
-  static Future<User?> SinginEmailpasword(
-      {required String emailAddress,
-      required String password,
-      required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    print(emailAddress + password);
-    try {
-      final credential = await auth.createUserWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
-      user = credential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-    return user;
-  }
-
-  TextEditingController emailController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  // static Future<User?> loginUsingEmailPassword(
+  //     {required String emailAddress,
+  //     required String password,
+  //     required BuildContext Context}) async {
+  //   print(emailAddress + password);
+  //   FirebaseAuth auth = FirebaseAuth.instance;
+  //   User? user;
+  //   try {
+  //     final credential = await auth.signInWithEmailAndPassword(
+  //         email: emailAddress, password: password);
+  //     user = credential.user;
+  //   } on FirebaseAuthException catch (e) {
+  //     print(e);
+  //     if (e.code == 'user-not-found') {
+  //       print('No user found for that email.');
+  //     } else if (e.code == 'wrong-password') {
+  //       print('Wrong password provided for that user.');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return user;
+  // }
+  final AuthController authController = AuthController();
+  TextEditingController emailContorller = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -50,12 +50,12 @@ class _SinginState extends State<Singin> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              "Create an Account ",
+              "Login ",
               style: TextStyle(
                   fontSize: 33, fontWeight: FontWeight.w600, color: Colors.red),
             ),
             const SizedBox(
-              height: 06,
+              height: 20,
             ),
             const Text(
               "Enter Your Contact",
@@ -68,20 +68,8 @@ class _SinginState extends State<Singin> {
               height: 30,
             ),
             TextFormField(
-              keyboardType: TextInputType.text,
-              controller: emailController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  prefixIcon: const Icon(IconlyBold.profile, color: Colors.red),
-                  hintText: "User Name"),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            TextFormField(
               keyboardType: TextInputType.emailAddress,
-              controller: emailController,
+              controller: emailContorller,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16)),
@@ -115,38 +103,35 @@ class _SinginState extends State<Singin> {
               width: double.infinity,
               child: InkWell(
                 onTap: () async {
-                  User? user = await SinginEmailpasword(
-                      emailAddress: emailController.text,
-                      password: passwordController.text,
-                      context: context);
-                  // User? user = await loginUsingEmailPassword(
-                  //     emailAddress: emailContorller.text,
-                  //     password: PasswordContorller.text,
-                  //     Context: context);
-                  if (user != null) {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const HomeScreen()));
+                  String email = emailContorller.text.trim();
+                  String password = passwordController.text.trim();
+
+                  bool isSuccess =
+                      await authController.loginUser(email, password, context);
+                  if (isSuccess) {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Login failed')),
+                    );
                   }
                 },
                 child: const Center(
                     child: Text(
-                  "Sing In",
+                  "Login",
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 )),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => LoginScreen()));
+                      MaterialPageRoute(builder: (context) => Singin()));
                 },
-                child: Text(
-                  "Alredy User?" "Login",
-                  style: TextStyle(fontSize: 16),
-                ))
+                child: Text("Do'nt Have Any Account ?"))
           ],
         ),
       ),
