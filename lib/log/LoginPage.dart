@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:login/view/Home.dart';
 
 import '../service/LoginController.dart';
 import 'Singin.dart';

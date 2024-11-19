@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:gap/gap.dart';
@@ -29,7 +31,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedValue;
+    //String? selectedValue;
     return Container(
       height: MediaQuery.of(context).size.height * 0.70,
       decoration: const BoxDecoration(
@@ -55,9 +57,10 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
             const Center(
               child: Text(
                 "Add New Todo Task",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
+            const Gap(10),
             Divider(thickness: 1, color: Colors.grey.withOpacity(0.5)),
             const Gap(10),
             const Text(
@@ -140,7 +143,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
                 ),
               ],
             ),
-            Gap(10),
+            const Gap(10),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
