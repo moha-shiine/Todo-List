@@ -104,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
                       return ListView.builder(
+                        reverse: true,
                         shrinkWrap: true,
                         physics: AlwaysScrollableScrollPhysics(),
                         itemCount: taskController.todoTasks.length,
