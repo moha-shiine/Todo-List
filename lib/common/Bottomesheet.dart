@@ -11,7 +11,9 @@ import 'package:login/widget/RadioList.dart';
 import 'package:login/widget/datawidget.dart';
 
 import '../controller/RadioController.dart';
+import '../model/model_task.dart';
 import '../widget/elevation.dart';
+import 'package:intl/intl.dart';
 
 class CardBottomsheet extends StatefulWidget {
   const CardBottomsheet({
@@ -34,6 +36,8 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
   final TimeController timeController = Get.put(TimeController());
   final DateController dateController = Get.put(DateController());
   final RadioController radioController = Get.put(RadioController());
+  TextEditingController TitleTaskController = TextEditingController();
+  TextEditingController discriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     //String? selectedValue;
@@ -76,6 +80,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
               10,
             ),
             TextField(
+              controller: TitleTaskController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -100,6 +105,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
               10,
             ),
             TextField(
+              controller: discriptionController,
               maxLines: 4,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -130,26 +136,28 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
               children: [
                 Expanded(
                   child: RadioBotomList(
-                    onChangeValue: () {},
+                    onChangeValue: () => radioController.updateGroupValue(1),
                     RadioValue: 1,
                     TitelCategory: 'LRN',
                     colorCategory: Colors.green,
                   ),
                 ),
+                Gap(20),
                 Expanded(
                   child: RadioBotomList(
-                    onChangeValue: () {},
+                    onChangeValue: () => radioController.updateGroupValue(2),
                     RadioValue: 2,
-                    TitelCategory: 'GEN',
+                    TitelCategory: 'WRK',
                     colorCategory: Colors.blue,
                   ),
                 ),
+                Gap(20),
                 Expanded(
                   child: RadioBotomList(
-                    onChangeValue: () {},
+                    onChangeValue: () => radioController.updateGroupValue(3),
                     RadioValue: 3,
-                    TitelCategory: 'WRK',
-                    colorCategory: Colors.amber,
+                    TitelCategory: 'GEN',
+                    colorCategory: Colors.amber.shade700,
                   ),
                 ),
               ],
@@ -177,14 +185,23 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
                 Gap(23),
                 datawidget(
                   onTap: () async {
-                    // Show the time picker
-                    final TimeOfDay? pickedTime = await showTimePicker(
-                      context: context,
+                    TimeOfDay? pickedTime = await showTimePicker(
                       initialTime: TimeOfDay.now(),
+                      context: context, //context of current state
                     );
 
                     if (pickedTime != null) {
-                      timeController.updateTime(pickedTime);
+                      print(pickedTime.format(context)); //output 10:51 PM
+                      DateTime parsedTime = DateFormat.jm()
+                          .parse(pickedTime.format(context).toString());
+                      //converting to DateTime so that we can further format on different pattern.
+                      print(parsedTime); //output 1970-01-01 22:53:00.000
+                      String formattedTime =
+                          DateFormat('HH:mm:ss').format(parsedTime);
+                      print(formattedTime); //output 14:59:00
+                      //DateFormat() is from intl package, you can format the time on any pattern you need.
+                    } else {
+                      print("Time is not selected");
                     }
                   },
                   Icons: Icons.lock_clock,
@@ -206,7 +223,34 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
                 ),
                 Gap(23),
                 ElevatedBotom(
-                  OnTap: () {},
+                  OnTap: () {
+                    final getRadioValue = radioController.groupValue.value;
+                    String Category = "";
+                    switch (getRadioValue) {
+                      case 1:
+                        Category = 'learning';
+                        break;
+                      case 2:
+                        Category = 'Working';
+                        break;
+                      case 3:
+                        Category = 'General';
+                        break;
+                    }
+                    taskController.addTask(TodoTask(
+                      docId: '', // Firestore will generate this
+                      titleTask: TitleTaskController.text,
+                      description: discriptionController.text,
+                      categoryTask: Category,
+                      dateTask: dateController.dateValue.value,
+                      timeTask: timeController.timeValue.value,
+                    ));
+                    TitleTaskController.clear();
+                    radioController.updateGroupValue(0);
+
+                    Navigator.pop(context);
+                    //   print(object)
+                  },
                   color: Colors.blue,
                   title: "Create",
                 )
