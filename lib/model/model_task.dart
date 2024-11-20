@@ -5,8 +5,10 @@ class TodoTask {
   final String categoryTask;
   final String dateTask;
   final String timeTask;
+  bool isChecked;
 
   TodoTask({
+    required this.isChecked,
     required this.docId,
     required this.titleTask,
     required this.description,
@@ -24,6 +26,7 @@ class TodoTask {
       categoryTask: doc['categoryTask'],
       dateTask: doc['dateTask'],
       timeTask: doc['timeTask'],
+      isChecked: false,
     );
   }
 
@@ -35,6 +38,7 @@ class TodoTask {
       'categoryTask': categoryTask,
       'dateTask': dateTask,
       'timeTask': timeTask,
+      'isChecked': isChecked,
     };
   }
 }

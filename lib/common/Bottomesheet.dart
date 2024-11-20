@@ -13,7 +13,6 @@ import 'package:login/widget/datawidget.dart';
 import '../controller/RadioController.dart';
 import '../model/model_task.dart';
 import '../widget/elevation.dart';
-import 'package:intl/intl.dart';
 
 class CardBottomsheet extends StatefulWidget {
   const CardBottomsheet({
@@ -185,23 +184,14 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
                 Gap(23),
                 datawidget(
                   onTap: () async {
-                    TimeOfDay? pickedTime = await showTimePicker(
+                    // Show the time picker
+                    final TimeOfDay? pickedTime = await showTimePicker(
+                      context: context,
                       initialTime: TimeOfDay.now(),
-                      context: context, //context of current state
                     );
 
                     if (pickedTime != null) {
-                      print(pickedTime.format(context)); //output 10:51 PM
-                      DateTime parsedTime = DateFormat.jm()
-                          .parse(pickedTime.format(context).toString());
-                      //converting to DateTime so that we can further format on different pattern.
-                      print(parsedTime); //output 1970-01-01 22:53:00.000
-                      String formattedTime =
-                          DateFormat('HH:mm:ss').format(parsedTime);
-                      print(formattedTime); //output 14:59:00
-                      //DateFormat() is from intl package, you can format the time on any pattern you need.
-                    } else {
-                      print("Time is not selected");
+                      timeController.updateTime(pickedTime);
                     }
                   },
                   Icons: Icons.lock_clock,
@@ -244,6 +234,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
                       categoryTask: Category,
                       dateTask: dateController.dateValue.value,
                       timeTask: timeController.timeValue.value,
+                      isChecked: false,
                     ));
                     TitleTaskController.clear();
                     radioController.updateGroupValue(0);

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:login/service/taskcoloection.dart';
+import 'package:login/widget/cardListwidget.dart';
 
 import 'package:login/widget/headerWidget.dart';
 
@@ -13,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isChecked = false;
+  final TodoTaskController taskController = Get.put(TodoTaskController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,79 +78,134 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               cardwidget(),
               Gap(20),
-              Container(
-                height: 130,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  children: [
-                    Container(
-                      height: 128,
-                      width: 20,
-                      decoration: const BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              topLeft: Radius.circular(10))),
-                    ),
-                    Expanded(
-                        child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListTile(
-                              title: Text(
-                                "Learn Flutter State Managment",
-                                style: TextStyle(
-                                    decoration: isChecked
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              subtitle: Text(
-                                "learning widget  tree flutter",
-                                style: TextStyle(
-                                  decoration: isChecked
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                ),
-                              ),
-                              trailing: Transform.scale(
-                                scale: 1.9,
-                                child: Checkbox(
-                                  checkColor: Colors.white,
-                                  activeColor: Colors.green,
-                                  shape: CircleBorder(),
-                                  value: isChecked,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isChecked = value ?? false;
-                                    });
-                                  },
-                                ),
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Divider(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              "Today  18/11/2024  12:30 PM",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 15),
-                            ),
-                          )
-                        ],
+              // ListView.builder(
+              //     shrinkWrap: true,
+              //     physics: AlwaysScrollableScrollPhysics(),
+              //     itemCount: taskController.todoTasks.length,
+              //     itemBuilder: (context, index) {
+              //       return Container(
+              //         height: 130,
+              //         decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(10)),
+              //         width: MediaQuery.of(context).size.width,
+              //         child: Row(
+              //           children: [
+              //             Container(
+              //               height: 128,
+              //               width: 20,
+              //               decoration: const BoxDecoration(
+              //                   color: Colors.green,
+              //                   borderRadius: BorderRadius.only(
+              //                       bottomLeft: Radius.circular(10),
+              //                       topLeft: Radius.circular(10))),
+              //             ),
+              //             Expanded(
+              //                 child: Padding(
+              //               padding: EdgeInsets.symmetric(horizontal: 12),
+              //               child: Column(
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: [
+              //                   ListTile(
+              //                       title: Text(
+              //                         taskController.todoTasks[index].titleTask,
+              //                         style: TextStyle(
+              //                             decoration: isChecked
+              //                                 ? TextDecoration.lineThrough
+              //                                 : TextDecoration.none,
+              //                             fontSize: 16,
+              //                             fontWeight: FontWeight.w600),
+              //                       ),
+              //                       subtitle: Text(
+              //                         taskController
+              //                             .todoTasks[index].description,
+              //                         style: TextStyle(
+              //                           decoration: isChecked
+              //                               ? TextDecoration.lineThrough
+              //                               : TextDecoration.none,
+              //                         ),
+              //                       ),
+              //                       trailing: Transform.scale(
+              //                         scale: 1.9,
+              //                         child: Checkbox(
+              //                           checkColor: Colors.white,
+              //                           activeColor: Colors.green,
+              //                           shape: CircleBorder(),
+              //                           value: isChecked,
+              //                           onChanged: (bool? value) {
+              //                             setState(() {
+              //                               isChecked = value ?? false;
+              //                             });
+              //                           },
+              //                         ),
+              //                       )),
+              //                   Padding(
+              //                     padding: const EdgeInsets.symmetric(
+              //                         horizontal: 10),
+              //                     child: Divider(),
+              //                   ),
+              //                   Padding(
+              //                     padding: const EdgeInsets.symmetric(
+              //                         horizontal: 10),
+              //                     child: Text(
+              //                       taskController.todoTasks[index].dateTask,
+              //                       //{$taskController.todoTasks[index].titleTask},
+              //                       style: TextStyle(
+              //                           fontWeight: FontWeight.w500,
+              //                           fontSize: 15),
+              //                     ),
+              //                   )
+              //                 ],
+              //               ),
+              //             ))
+              //           ],
+              //         ),
+              //       );
+              //     })
+              FutureBuilder(
+                future: taskController.fetchTasks(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        'Failed to load tasks: ${snapshot.error}',
+                        style: TextStyle(color: Colors.red, fontSize: 16),
+                        textAlign: TextAlign.center,
                       ),
-                    ))
-                  ],
-                ),
-              )
+                    );
+                  } else {
+                    return Obx(() {
+                      if (taskController.todoTasks.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'No tasks available',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        );
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: taskController.todoTasks.length,
+                        itemBuilder: (context, index) {
+                          final task = taskController.todoTasks[index];
+                          return TaskCard(
+                            task: task,
+                            onChanged: (value) {
+                              taskController.updateTaskStatus(
+                                  task.docId, value ?? false);
+                            },
+                          );
+                        },
+                      );
+                    });
+                  }
+                },
+              ),
             ],
           ),
         ),
