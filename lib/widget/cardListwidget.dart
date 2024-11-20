@@ -1,8 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 
 import '../model/model_task.dart';
+import '../service/taskcoloection.dart';
 
 class TaskCard extends StatelessWidget {
   final TodoTask task;
@@ -16,6 +20,7 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TodoTaskController taskController = Get.put(TodoTaskController());
     Color Categorycolor = Colors.white;
     final getcategory = task.categoryTask;
     switch (getcategory) {
@@ -30,7 +35,7 @@ class TaskCard extends StatelessWidget {
         break;
     }
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
       height: 130,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -63,6 +68,10 @@ class TaskCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
+                    leading: IconButton(
+                      onPressed: () => taskController.deleteTask(task.docId),
+                      icon: Icon(IconlyLight.delete),
+                    ),
                     title: Text(
                       task.titleTask,
                       style: TextStyle(
@@ -74,6 +83,8 @@ class TaskCard extends StatelessWidget {
                       ),
                     ),
                     subtitle: Text(
+                      //  textAlign: TextAlign.justify,
+                      maxLines: 1,
                       task.description,
                       style: TextStyle(
                         decoration: task.isChecked
