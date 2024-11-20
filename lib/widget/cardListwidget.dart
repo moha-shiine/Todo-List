@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../model/model_task.dart';
@@ -29,16 +29,14 @@ class TaskCard extends StatelessWidget {
         Categorycolor = Colors.amber.shade700;
         break;
     }
-
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       height: 130,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.3),
             blurRadius: 8,
             offset: Offset(0, 3),
@@ -52,7 +50,7 @@ class TaskCard extends StatelessWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               color: Categorycolor,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
               ),
