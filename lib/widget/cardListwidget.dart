@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:readmore/readmore.dart';
 
 import '../model/model_task.dart';
 import '../service/taskcoloection.dart';
@@ -36,7 +37,7 @@ class TaskCard extends StatelessWidget {
     }
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
-      height: 130,
+      height: 140,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -82,16 +83,29 @@ class TaskCard extends StatelessWidget {
                             : TextDecoration.none,
                       ),
                     ),
-                    subtitle: Text(
-                      //  textAlign: TextAlign.justify,
-                      maxLines: 1,
+                    subtitle: ReadMoreText(
                       task.description,
-                      style: TextStyle(
+                      trimMode: TrimMode.Line,
+                      trimLines: 1,
+                      colorClickableText: Colors.pink,
+                      trimCollapsedText: 'Show more',
+                      trimExpandedText: 'Show less',
+                      moreStyle: TextStyle(
                         decoration: task.isChecked
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
                     ),
+                    // subtitle: Text(
+                    //   //  textAlign: TextAlign.justify,
+                    //   maxLines: 1,
+                    //   task.description,
+                    //   style: TextStyle(
+                    //     decoration: task.isChecked
+                    //         ? TextDecoration.lineThrough
+                    //         : TextDecoration.none,
+                    //   ),
+                    // ),
                     trailing: Transform.scale(
                       scale: 1.4,
                       child: Checkbox(
