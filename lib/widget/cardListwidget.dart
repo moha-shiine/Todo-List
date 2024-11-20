@@ -1,8 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:readmore/readmore.dart';
 
 import '../model/model_task.dart';
+import '../service/taskcoloection.dart';
 
 class TaskCard extends StatelessWidget {
   final TodoTask task;
@@ -16,6 +21,7 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TodoTaskController taskController = Get.put(TodoTaskController());
     Color Categorycolor = Colors.white;
     final getcategory = task.categoryTask;
     switch (getcategory) {
@@ -29,16 +35,14 @@ class TaskCard extends StatelessWidget {
         Categorycolor = Colors.amber.shade700;
         break;
     }
-
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-      height: 130,
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+      height: 140,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.3),
             blurRadius: 8,
             offset: Offset(0, 3),
@@ -52,7 +56,7 @@ class TaskCard extends StatelessWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               color: Categorycolor,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
               ),
@@ -65,6 +69,10 @@ class TaskCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
+                    leading: IconButton(
+                      onPressed: () => taskController.deleteTask(task.docId),
+                      icon: Icon(IconlyLight.delete),
+                    ),
                     title: Text(
                       task.titleTask,
                       style: TextStyle(
@@ -75,14 +83,29 @@ class TaskCard extends StatelessWidget {
                             : TextDecoration.none,
                       ),
                     ),
-                    subtitle: Text(
+                    subtitle: ReadMoreText(
                       task.description,
-                      style: TextStyle(
+                      trimMode: TrimMode.Line,
+                      trimLines: 1,
+                      colorClickableText: Colors.pink,
+                      trimCollapsedText: 'Show more',
+                      trimExpandedText: 'Show less',
+                      moreStyle: TextStyle(
                         decoration: task.isChecked
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
                     ),
+                    // subtitle: Text(
+                    //   //  textAlign: TextAlign.justify,
+                    //   maxLines: 1,
+                    //   task.description,
+                    //   style: TextStyle(
+                    //     decoration: task.isChecked
+                    //         ? TextDecoration.lineThrough
+                    //         : TextDecoration.none,
+                    //   ),
+                    // ),
                     trailing: Transform.scale(
                       scale: 1.4,
                       child: Checkbox(
