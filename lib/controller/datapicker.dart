@@ -13,7 +13,7 @@ class DateController extends GetxController {
 
 class TimeController extends GetxController {
   // Observable variable for time value
-  var timeValue = "hh:mm".obs;
+  var timeValue = "hh:mm PM".obs;
 
   // Method to update the time
   void updateTime(TimeOfDay time) {

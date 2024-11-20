@@ -121,7 +121,7 @@ class TaskCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
-                      task.dateTask,
+                      '${task.dateTask}, ${task.timeTask}', // Use string interpolation
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 15,
