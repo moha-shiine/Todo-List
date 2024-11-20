@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 20,
               ),
-              cardwidget(),
+              CardWidget(),
               Gap(20),
               FutureBuilder(
                 future: taskController.fetchTasks(),
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
                       return ListView.builder(
-                        reverse: true,
+                        //reverse: true,
                         shrinkWrap: true,
                         physics: AlwaysScrollableScrollPhysics(),
                         itemCount: taskController.todoTasks.length,
