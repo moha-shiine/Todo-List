@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class datawidget extends StatelessWidget {
   final String? title;
-  final String? datevalue;
+  final RxString? datevalue;
   final IconData? Icons;
   final VoidCallback onTap;
   const datawidget({
@@ -42,10 +44,10 @@ class datawidget extends StatelessWidget {
                 children: [
                   Icon(Icons),
                   Gap(10),
-                  Text(
-                    datevalue!,
-                    style: TextStyle(fontSize: 15),
-                  )
+                  Obx(() => Text(
+                        datevalue!.value,
+                        style: TextStyle(fontSize: 15),
+                      ))
                 ],
               ),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
