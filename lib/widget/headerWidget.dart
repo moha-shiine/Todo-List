@@ -18,7 +18,7 @@ class cardwidget extends StatelessWidget {
               "Tody's Task",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 23,
                   fontWeight: FontWeight.w900),
             ),
             const Gap(2),

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../model/model_task.dart';
@@ -14,6 +16,20 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color Categorycolor = Colors.white;
+    final getcategory = task.categoryTask;
+    switch (getcategory) {
+      case 'learning':
+        Categorycolor = Colors.green;
+        break;
+      case 'Working':
+        Categorycolor = Colors.blue;
+        break;
+      case 'General':
+        Categorycolor = Colors.amber.shade700;
+        break;
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
       height: 130,
@@ -34,9 +50,9 @@ class TaskCard extends StatelessWidget {
           Container(
             width: 20,
             height: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: Categorycolor,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
               ),
