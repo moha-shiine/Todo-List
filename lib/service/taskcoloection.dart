@@ -10,6 +10,10 @@ class TodoTaskController extends GetxController {
 
   // Firestore collection reference for "todoTask"
   CollectionReference get tasksCollection => _firestore.collection('todoTask');
+  void onInit() {
+    super.onInit();
+    fetchTasks();
+  }
 
   // Fetch tasks from Firestore
   Future<void> fetchTasks() async {
@@ -28,28 +32,42 @@ class TodoTaskController extends GetxController {
   Future<void> addTask(TodoTask task) async {
     try {
       final docRef = await tasksCollection.add(task.toDocument());
-      task.docId = docRef.id; // Update task with Firestore doc ID
+      task.docId = docRef.id;
       todoTasks.add(task);
     } catch (e) {
       Get.snackbar("Error", "Failed to add task: $e");
     }
   }
 
-  // Update a task in Firestore
-  Future<void> updateTask(TodoTask updatedTask) async {
+  // Update task status in the Firestore and locally
+  Future<void> updateTaskStatus(String taskId, bool isChecked) async {
     try {
-      await tasksCollection
-          .doc(updatedTask.docId)
-          .update(updatedTask.toDocument());
-      int index =
-          todoTasks.indexWhere((task) => task.docId == updatedTask.docId);
-      if (index != -1) {
-        todoTasks[index] = updatedTask;
+      await tasksCollection.doc(taskId).update({'isChecked': isChecked});
+      // Update the local task list
+      final taskIndex = todoTasks.indexWhere((task) => task.docId == taskId);
+      if (taskIndex != -1) {
+        todoTasks[taskIndex].isChecked = isChecked;
+        todoTasks.refresh();
       }
     } catch (e) {
-      Get.snackbar("Error", "Failed to update task: $e");
+      Get.snackbar("Error", "Failed to update task status: $e");
     }
   }
+
+  // Future<void> updateTask(TodoTask updatedTask) async {
+  //   try {
+  //     await tasksCollection
+  //         .doc(updatedTask.docId)
+  //         .update(updatedTask.toDocument());
+  //     int index =
+  //         todoTasks.indexWhere((task) => task.docId == updatedTask.docId);
+  //     if (index != -1) {
+  //       todoTasks[index] = updatedTask;
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar("Error", "Failed to update task: $e");
+  //   }
+  // }
 
   // Delete a task from Firestore
   Future<void> deleteTask(String docId) async {
