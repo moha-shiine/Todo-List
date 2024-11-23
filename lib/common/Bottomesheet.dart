@@ -56,6 +56,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
               child: Divider(
                 thickness: 3,
                 height: 2,
+                // ignore: deprecated_member_use
                 color: Colors.grey.withOpacity(0.3),
               ),
             ),
@@ -69,6 +70,7 @@ class _CardBottomsheetState extends State<CardBottomsheet> {
               ),
             ),
             const Gap(10),
+            // ignore: deprecated_member_use
             Divider(thickness: 1, color: Colors.grey.withOpacity(0.5)),
             const Gap(10),
             const Text(
